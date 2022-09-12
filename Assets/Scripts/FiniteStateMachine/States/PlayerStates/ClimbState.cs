@@ -12,12 +12,8 @@ public class ClimbState : State
         Target.Rigidbody.isKinematic = true;
         _currentLadder = Target.ClimbController.CurrentLadder;
         _canClimb = true;
-
-        if (Target.Rigidbody.velocity.x != 0)
-        {
-            Target.Rigidbody.velocity = Vector2.zero;
-            Animator.SetFloat(AnimationNames.HashWalkSpeed, Vector2.zero.x);
-        }
+        Target.Rigidbody.velocity = Vector2.zero;
+        Animator.SetFloat(AnimationNames.HashWalkSpeed, Vector2.zero.x);
 
         if (_currentLadder != null)
         {

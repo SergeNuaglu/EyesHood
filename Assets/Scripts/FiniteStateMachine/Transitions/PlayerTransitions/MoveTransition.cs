@@ -8,7 +8,7 @@ public class MoveTransition : Transition
 
     private void Update()
     {
-        if (Target.Foot.IsGrounded)
+        if (Target.Foot.IsGrounded && Target.Rigidbody.velocity.y == Vector2.zero.y)
         {
             if (Target.MoveInput.x < -_walkThreshold || Target.MoveInput.x > _walkThreshold)
             {

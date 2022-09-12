@@ -15,6 +15,6 @@ MonoBehaviour:
   _health: 100
   _moveSpeed: 4
   _climbSpeed: 1
-  _jumpForce: 5
+  _jumpForce: 6
   _jumpHorizontalForce: 3
   _rollForce: 7

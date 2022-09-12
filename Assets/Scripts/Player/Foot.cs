@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Foot : MonoBehaviour
 {
-    private bool _isGrounded;
+    public bool IsGrounded { get; private set; }
 
-    public bool IsGrounded => _isGrounded;
-
-    public void SetIsGround(bool value)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        _isGrounded = value;
+        if (collision.TryGetComponent<Platform>(out Platform platform))
+            IsGrounded = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Platform>(out Platform platform))
+            IsGrounded = false;
     }
 }
