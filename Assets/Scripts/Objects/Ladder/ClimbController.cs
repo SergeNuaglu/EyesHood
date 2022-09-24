@@ -6,24 +6,32 @@ public class ClimbController : MonoBehaviour
 {
     [SerializeField] private List<Ladder> _ladders;
 
-
     public Ladder CurrentLadder { get; private set; }
 
     private void OnEnable()
     {
-        foreach (var ladder in _ladders)
+        if (_ladders.Count > 0)
         {
-            ladder.PlayerWentIn += OnPlayerWentIn;
-            ladder.PlayerWentOut += OnPlayerWentOut;
+            foreach (var ladder in _ladders)
+            {
+                ladder.PlayerWentIn += OnPlayerWentIn;
+                ladder.PlayerWentOut += OnPlayerWentOut;
+            }
         }
     }
 
     private void OnDisable()
     {
-        foreach (var ladder in _ladders)
+        if (_ladders.Count > 0)
         {
-            ladder.PlayerWentIn -= OnPlayerWentIn;
-            ladder.PlayerWentOut -= OnPlayerWentOut;
+            if (_ladders.Count != 0)
+            {
+                foreach (var ladder in _ladders)
+                {
+                    ladder.PlayerWentIn -= OnPlayerWentIn;
+                    ladder.PlayerWentOut -= OnPlayerWentOut;
+                }
+            }
         }
     }
 

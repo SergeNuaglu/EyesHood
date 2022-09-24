@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f18634eb9cab4aa5afd2e029d9aa37a, type: 3}
+  m_Name: PlayerData
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _maxHeartCount: 3
+  _moveSpeed: 4
+  _climbSpeed: 1
+  _jumpForce: 6
+  _jumpHorizontalForce: 3
+  _rollForce: 7
+  _lastHealth: {fileID: 11400000, guid: 9731db228c3794896a1b65bb67526075, type: 2}
+  _lastHeartCount: {fileID: 11400000, guid: c1efc4069623b4a4198e131bd19ba7dc, type: 2}
+  _lastMoney: {fileID: 11400000, guid: e2fce33e8765243728c3b2dac6b3e30b, type: 2}
+  _lastWeaponIndex: {fileID: 11400000, guid: 224276abe100540228419efa244ca52e, type: 2}

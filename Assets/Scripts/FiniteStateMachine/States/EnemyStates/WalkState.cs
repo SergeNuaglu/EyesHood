@@ -22,14 +22,18 @@ public class WalkState : State
     {
         if (GetComponent<Enemy>().Foot != null)
             _foot = GetComponent<Enemy>().Foot;
-        //GameObject.FindObjectsOfType(typeof(MonoBehaviour));
     }
 
+    private void OnDisable()
+    {
+        _isMoving = true;
+        _runningTime = _startRunningTime;
+    }
 
     private void Update()
     {
         if (_foot != null)
-            if (_foot.IsGrounded == false)
+            if (_foot.IsGrounded == false) 
                 _isMoving = false;
 
         if (_isMoving)
@@ -69,7 +73,7 @@ public class WalkState : State
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.TryGetComponent<Player>(out Player player) && enabled)
+        if (collision.collider.TryGetComponent<Player>(out Player player))
         {
             _runningTime = _startRunningTime;
             _isMoving = true;

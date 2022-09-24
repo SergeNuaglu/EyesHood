@@ -31,7 +31,6 @@ public class WeaponButtonsController : MonoBehaviour
         _attackButton.gameObject.SetActive(false);
     }
 
-
     public void OnWeaponButtonClicked(Weapon weapon, Sprite attackTypeIcon)
     {
         _player.ChangeWeapon(weapon);

@@ -9,21 +9,23 @@ public class ClimbState : State
 
     private void OnEnable()
     {
-        Target.Rigidbody.isKinematic = true;
         _currentLadder = Target.ClimbController.CurrentLadder;
-        _canClimb = true;
-        Target.Rigidbody.velocity = Vector2.zero;
-        Animator.SetFloat(AnimationNames.HashWalkSpeed, Vector2.zero.x);
 
         if (_currentLadder != null)
         {
+            _canClimb = true;
+            Target.Rigidbody.isKinematic = true;
+            Target.Rigidbody.velocity = Vector2.zero;
+            Animator.SetFloat(AnimationNames.HashWalkSpeed, Vector2.zero.x);
+
             if (_currentLadder.TopZone.IsPlayerInside)
                 Target.transform.position = new Vector3(_currentLadder.transform.position.x, _currentLadder.TopEnterPoint.position.y, Target.transform.position.z);
             else if (_currentLadder.BottomZone.IsPlayerInside)
                 Target.transform.position = new Vector3(_currentLadder.transform.position.x, Target.transform.position.y, Target.transform.position.z);
+
+            Animator.Play(AnimationNames.HashClimb);
         }
 
-        Animator.Play(AnimationNames.HashClimb);
     }
 
     private void OnDisable()

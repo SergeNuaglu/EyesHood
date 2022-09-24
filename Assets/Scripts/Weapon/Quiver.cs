@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class Quiver : MonoBehaviour
-{
-    [SerializeField] private int _startCapacity;
+{  
+    [SerializeField]private int _capacity;
     [SerializeField] private PickUpItemsGenerator _pickUpItemsGenerator;
-
-    private int _capacity;
+    [SerializeField] private LastLevelData _lastItemsCount;
+    [SerializeField] private TMP_Text _countDisplay;
 
     public int ItemsCount { get; private set; }
+    public int CurentCapacity => _capacity;
 
     public event UnityAction<int> ItemsCountChanged;
-
-    private void Awake()
-    {
-        _capacity = _startCapacity;
-    }
 
     private void OnEnable()
     {
@@ -31,9 +28,15 @@ public class Quiver : MonoBehaviour
 
     private void OnItemPickedUp()
     {
+        AddItem();
+    }
+
+    public void AddItem()
+    {
         if (ItemsCount < _capacity)
         {
             ItemsCount++;
+            _countDisplay.text = ItemsCount.ToString();
             ItemsCountChanged?.Invoke(ItemsCount);
         }
     }
@@ -41,6 +44,19 @@ public class Quiver : MonoBehaviour
     public void UseItem()
     {
         ItemsCount--;
+        _countDisplay.text = ItemsCount.ToString();
         ItemsCountChanged?.Invoke(ItemsCount);
+    }
+
+    public void ReturnLastItemCount()
+    {
+        ItemsCount = _lastItemsCount.Data;
+        _countDisplay.text = ItemsCount.ToString();
+        ItemsCountChanged?.Invoke(ItemsCount);
+    }
+
+    public void SaveLastItemCount()
+    {
+        _lastItemsCount.Set(ItemsCount);
     }
 }

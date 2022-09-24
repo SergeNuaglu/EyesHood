@@ -11,6 +11,8 @@ public class HasherAnimationsNames: MonoBehaviour
     public int HashClimb { get; private set; }
     public int HashJump { get; private set; }
     public int HashAttack { get; private set; }
+    public int HashAttack2 { get; private set; }
+    public int HashDash { get; private set; }
     public int HashDie{ get; private set; }
     public int HashApplyDamage{ get; private set; }
     public int HashSwing { get; private set; }
@@ -28,6 +30,8 @@ public class HasherAnimationsNames: MonoBehaviour
         HashClimb = Animator.StringToHash(AnimatorPlayerController.States.Climb);
         HashJump = Animator.StringToHash(AnimatorPlayerController.States.Jump);
         HashAttack = Animator.StringToHash(AnimatorPlayerController.States.Attack);
+        HashAttack2 = Animator.StringToHash(AnimatorPlayerController.States.Attack2);
+        HashDash = Animator.StringToHash(AnimatorPlayerController.States.Dash);
         HashDie = Animator.StringToHash(AnimatorPlayerController.States.Die);
         HashApplyDamage = Animator.StringToHash(AnimatorPlayerController.States.ApplyDamage);
         HashSwing = Animator.StringToHash(AnimatorPlayerController.States.Swing);

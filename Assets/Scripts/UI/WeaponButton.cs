@@ -8,12 +8,12 @@ using UnityEngine.UI;
 
 public class WeaponButton : MonoBehaviour
 {
-    [SerializeField] private Weapon _weapon;
     [SerializeField] private Button _button;
-    [SerializeField] private Sprite _iconForAttackButton;
+    [SerializeField] private Sprite _weaponTypeIcon;
     [SerializeField] private Sprite _unselectedIcon;
     [SerializeField] private Sprite _selectedIcon;
 
+    private Weapon _weapon;
     private Image _image;
     private bool _isPressed = false;
 
@@ -37,15 +37,20 @@ public class WeaponButton : MonoBehaviour
         _button.onClick.RemoveListener(OnClickButton);
     }
 
+    public void Init(Weapon weapon)
+    {
+        _weapon = weapon;
+    }
+
     public void UnselectButton()
     {
         _isPressed = false;
         _image.sprite = _unselectedIcon;
     }
 
-    private void OnClickButton()
+    public void OnClickButton()
     {
-        Clicked?.Invoke(_weapon, _iconForAttackButton);
+        Clicked?.Invoke(_weapon, _weaponTypeIcon);
 
         if (_image.sprite == _selectedIcon)
         {

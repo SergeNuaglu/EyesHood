@@ -14,7 +14,7 @@ public class State : MonoBehaviour
 
     protected Player Target { get; set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         Animator = GetComponent<Animator>();
         AnimationNames = GetComponent<HasherAnimationsNames>();

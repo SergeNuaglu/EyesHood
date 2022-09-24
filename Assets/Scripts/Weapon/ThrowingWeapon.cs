@@ -11,12 +11,12 @@ public class ThrowingWeapon : Weapon
 
     private void OnEnable()
     {
-        _quiver.ItemsCountChanged += OnAProjectilesCountChanged;
+        _quiver.ItemsCountChanged += OnProjectilesCountChanged;
     }
 
     private void OnDisable()
     {
-        _quiver.ItemsCountChanged -= OnAProjectilesCountChanged;
+        _quiver.ItemsCountChanged -= OnProjectilesCountChanged;
     }
 
     public void Throw(Vector3 shootPoint, Vector2 flyDirection)
@@ -25,7 +25,7 @@ public class ThrowingWeapon : Weapon
         _quiver.UseItem();
     }
 
-    private void OnAProjectilesCountChanged(int count)
+    private void OnProjectilesCountChanged(int count)
     {
         if (count > 0)
             CanThrow = true;

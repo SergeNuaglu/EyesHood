@@ -6,9 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Forest.unity
+    path: 
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/TreeHouseInside.unity
-    guid: 5fc8da6b4bd294b08a509f9a05d215d1
+    path: 
+    guid: 222370c45111f46b29fa6c2cf09df717
+  - enabled: 1
+    path: Assets/Scenes/Forest.unity
+    guid: a7b7ad748d4b94e8c9e23d052542e96c
+  - enabled: 1
+    path: Assets/Scenes/Dungeon.unity
+    guid: 6d01cf8ad76d94e70a6885c1ce820ea0
+  - enabled: 1
+    path: Assets/Scenes/Cave.unity
+    guid: ddff15b29f7c148c2b2a3f987a11294a
   m_configObjects: {}

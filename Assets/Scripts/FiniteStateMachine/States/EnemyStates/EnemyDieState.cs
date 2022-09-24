@@ -19,10 +19,10 @@ public class EnemyDieState : State
         if (_runningTime <= _dieDuration)
             _runningTime += Time.deltaTime;
         else
-            DisableObjectAbroadScreen();
+            DestroyObjectAbroadScreen();
     }
 
-    protected void DisableObjectAbroadScreen()
+    private void DestroyObjectAbroadScreen()
     {
         Camera camera = Camera.main;
         Vector3 disableLeftPoint = camera.ViewportToWorldPoint(new Vector3(0, 0.5f, camera.nearClipPlane));
@@ -30,7 +30,7 @@ public class EnemyDieState : State
 
         if (transform.position.x < disableLeftPoint.x || transform.position.x > disableRightPoint.x)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

@@ -8,7 +8,7 @@ public class Stakes : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Player>(out Player player))
         {
-            player.Die();
+            player.ApplyDamage(player.PlayerData.MaxHealth, Vector2.zero);
         }
     }
 }

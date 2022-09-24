@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using IJunior.TypedScenes;
 
 public class GameLoader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+   public void EnterCave()
     {
-        
+        Cave.Load();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EnterDungeon()
     {
-        
+        Dungeon.Load();
     }
 }

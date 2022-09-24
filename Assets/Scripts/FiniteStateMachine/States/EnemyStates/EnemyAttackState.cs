@@ -4,31 +4,19 @@ using UnityEngine;
 
 public class EnemyAttackState : State
 {
-    [SerializeField] private int _damage;
-    [SerializeField] private int _hitForce;
-    [SerializeField] private HitPoint _hitPoint;
-
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
-        _hitPoint.Hit += OnHit;
-
         if (transform.position.x > Target.transform.position.x && transform.localScale.x > 0)
             ChangeDirection();
         else if (transform.position.x < Target.transform.position.x && transform.localScale.x < 0)
             ChangeDirection();
 
+        Attack();
+    }
+
+    protected virtual void Attack()
+    {
         Animator.Play(AnimationNames.HashAttack);
-    }
-
-    private void OnDisable()
-    {
-        _hitPoint.Hit -= OnHit;
-    }
-
-    private void OnHit()
-    {
-        Vector2 _hitDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        Target.ApplyDamage(_damage, _hitDirection, _hitForce);
     }
 
     private void ChangeDirection()

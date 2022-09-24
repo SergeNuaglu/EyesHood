@@ -20,6 +20,8 @@ public static class AnimatorPlayerController
         public const string Climb = "Base Layer.Climb";
         public const string Jump = "Base Layer.Jump";
         public const string Attack = "Base Layer.Attack";
+        public const string Attack2 = "Base Layer.Attack2";
+        public const string Dash = "Base Layer.Dash";
         public const string Die = "Base Layer.Die";
         public const string ApplyDamage = "Base Layer.ApplyDamage";
         public const string Swing = "Base Layer.Swing";

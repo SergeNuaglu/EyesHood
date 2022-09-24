@@ -7,11 +7,15 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
     [SerializeField] private int _reward;
     [SerializeField] private Player _target;
     [SerializeField] private Foot _foot;
+    [SerializeField] private HitPoint _hitPoint;
+    [SerializeField] private int _damage;
+    [SerializeField] private bool _isBoss;
 
+    private int _currentHealth;
     private FiniteStateMachine _enemyStateMachine;
 
     public Player Target => _target;
@@ -19,20 +23,41 @@ public class Enemy : MonoBehaviour
 
     public event UnityAction Died;
     public event UnityAction DamageApplied;
+    public event UnityAction<int, int> HealthChanged;
+
 
     private void Awake()
     {
         _enemyStateMachine = GetComponent<FiniteStateMachine>();
         _enemyStateMachine.Init(_target);
+        _currentHealth = _maxHealth;
     }
+
+    protected virtual void OnEnable()
+    {
+        _hitPoint.Hit += OnHit;
+    }
+
+    private void OnDisable()
+    {
+        _hitPoint.Hit -= OnHit;
+    }
+
+    public void OnHit()
+    {
+        Vector2 _hitDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        Target.ApplyDamage(_damage, _hitDirection, _hitPoint.HitForce);
+    }
+
 
     public void ApllyDamage(int damage)
     {
         int _minHealth = 0;
 
-        _health -= damage;
+        _currentHealth -= damage;
+        HealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-        if (_health <= _minHealth)
+        if (_currentHealth <= _minHealth)
             Die();
         else
             DamageApplied?.Invoke();
@@ -41,5 +66,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Die()
     {
         Died?.Invoke();
+
+        _target.OnEnemyDied(_reward, _isBoss);
     }
 }

@@ -7,15 +7,15 @@ public class PlayerDieTransition : Transition
     protected override void OnEnable()
     {
         base.OnEnable();
-        Target.Died += OnDied;
+        Target.GameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
-        Target.Died -= OnDied;
+        Target.GameOver -= OnGameOver;
     }
 
-    private void OnDied()
+    private void OnGameOver()
     {
         NeedTransit = true;
     }
