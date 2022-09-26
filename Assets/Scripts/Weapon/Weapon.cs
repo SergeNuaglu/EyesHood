@@ -76,7 +76,8 @@ public class Weapon : MonoBehaviour
     {
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            enemy.ApllyDamage(_currentDamage);
+            if (enemy.IsKilled == false)
+                enemy.ApllyDamage(_currentDamage);
         }
         else if (collision.TryGetComponent<InteractionObject>(out InteractionObject interactionObject))
         {

@@ -185,6 +185,8 @@ public class Player : MonoBehaviour
             BossKilled?.Invoke();
         else
             _money += reward;
+
+        MoneyChanged?.Invoke(_money);
     }
 
     private void SaveLevelData()
@@ -195,5 +197,4 @@ public class Player : MonoBehaviour
         if (_currentWeapon != null)
             _playerData.LastWeaponIndex.Set(_currentWeapon.Index);
     }
-
 }

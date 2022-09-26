@@ -15,26 +15,49 @@ public class Ladder : MonoBehaviour
     public ZoneOfLadder BottomZone => _bottomZone;
     public Transform TopEnterPoint => _topEnterPoint;
 
-    public event UnityAction<Ladder> PlayerWentIn;
-    public event UnityAction PlayerWentOut;
+    public event UnityAction<Ladder> PlayerWentToLadder;
+    public event UnityAction PlayerMovedAway;
+    public event UnityAction PlayerGotOffLadder;
 
-    public void ExitLadder(Transform target, bool isTopPosition)
+    private void OnEnable()
+    {
+        _topZone.PlayerEnteredZone += OnPlayerEnteredZone;
+        _bottomZone.PlayerEnteredZone +=OnPlayerEnteredZone;
+        _topZone.PlayerWentOutZone += OnPlayerWentOutZone;
+        _bottomZone.PlayerWentOutZone += OnPlayerWentOutZone;
+    }
+
+    private void OnDisable()
+    {
+        _topZone.PlayerEnteredZone -= OnPlayerEnteredZone;
+        _bottomZone.PlayerEnteredZone -= OnPlayerEnteredZone;
+        _topZone.PlayerWentOutZone -= OnPlayerWentOutZone;
+        _bottomZone.PlayerWentOutZone -= OnPlayerWentOutZone;
+    }
+
+    public void Exit()
+    {
+        PlayerGotOffLadder?.Invoke();
+    }
+
+    public void Exit(Transform target, bool isTopPosition)
     {
         if (isTopPosition)
             target.position = new Vector3(target.position.x, _topExitPoint.position.y, target.position.z);
         else
             target.position = new Vector3(target.position.x, _bottomExitPoint.position.y, target.position.z);
+
+        PlayerGotOffLadder?.Invoke();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnPlayerEnteredZone()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-            PlayerWentIn?.Invoke(this);
+        PlayerWentToLadder?.Invoke(this);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+
+   private void OnPlayerWentOutZone()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-            PlayerWentOut?.Invoke();
+        PlayerMovedAway?.Invoke();
     }
 }

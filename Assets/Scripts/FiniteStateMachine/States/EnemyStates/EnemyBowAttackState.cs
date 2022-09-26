@@ -9,8 +9,7 @@ public class EnemyBowAttackState : State
     [SerializeField] private float _shotsPerSecond;
 
     private Vector2 _shootDirection;
-    private WaitForSeconds _timeBeforeShooting;
-    private bool _canShoot = true;
+    private bool _canPrepareToThrow = true;
     private float _shotDuration;
     private float _runningTime;
     private float _startRunningTime = 0;
@@ -18,7 +17,6 @@ public class EnemyBowAttackState : State
     private void Start()
     {
         _shotDuration = 1 / _shotsPerSecond;
-        _timeBeforeShooting = new WaitForSeconds(_shotDuration);
     }
 
     private void OnEnable()
@@ -27,37 +25,41 @@ public class EnemyBowAttackState : State
             _shootDirection = Vector2.left;
         else
             _shootDirection = Vector2.right;
+
+        if(transform.position.x > Target.transform.position.x && transform.localScale.x > 0)
+            ChangeDirection();
+        else if (transform.position.x < Target.transform.position.x && transform.localScale.x < 0)
+            ChangeDirection();
     }
 
     private void OnDisable()
     {
-        StopCoroutine(Shoot());
+        _runningTime = _startRunningTime;
+        _canPrepareToThrow = true;
     }
 
     private void Update()
     {
         if (_runningTime <= _shotDuration)
         {
-            if (_canShoot)
+            if (_canPrepareToThrow)
             {
                 Animator.Play(AnimationNames.HashPrepareToThrow);
-                StartCoroutine(Shoot());
-                _canShoot = false;
+                _canPrepareToThrow = false;
             }
             _runningTime += Time.deltaTime;
         }
         else
         {
+            Animator.Play(AnimationNames.HashAttack);
+            _projectileGenerator.SetProjectileToStartPoint(_shootPoint.transform.position, _shootDirection);
+            _canPrepareToThrow = true;
             _runningTime = _startRunningTime;
-            StopCoroutine(Shoot());
         }
     }
 
-    private IEnumerator Shoot()
+    private void ChangeDirection()
     {
-        yield return _timeBeforeShooting;
-        Animator.Play(AnimationNames.HashAttack);
-        _projectileGenerator.SetProjectileToStartPoint(_shootPoint.transform.position, _shootDirection);
-        _canShoot = true;
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 }

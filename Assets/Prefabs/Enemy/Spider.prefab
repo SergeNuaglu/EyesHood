@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153f66e4472954e3abc2dd1e2755d2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitForce: 0
 --- !u!58 &5557009264363426860
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -136,6 +137,7 @@ GameObject:
   - component: {fileID: 5557009264471466127}
   - component: {fileID: 5557009264471466126}
   - component: {fileID: 5557009264471466125}
+  - component: {fileID: 5557009264471466143}
   - component: {fileID: 5557009264471466124}
   - component: {fileID: 5557009264471466115}
   - component: {fileID: 5557009264471466114}
@@ -149,7 +151,6 @@ GameObject:
   - component: {fileID: 5557009264471466138}
   - component: {fileID: 5557009264471466137}
   - component: {fileID: 5557009264471466136}
-  - component: {fileID: 5557009264471466143}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Untagged
@@ -305,10 +306,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6de322af23a46708cfa2f3b109b349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
-  _reward: 0
+  _maxHealth: 8
+  _reward: 4
   _target: {fileID: 0}
   _foot: {fileID: 5557009264110618107}
+  _hitPoint: {fileID: 5557009264363426838}
+  _damage: 10
+  _isBoss: 0
+--- !u!114 &5557009264471466143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557009264471466141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fe1d1d32348463e926b795e5fdc77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitionRange: 10
+  _rangeYPosition: 0.5
+  _filter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!114 &5557009264471466124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +382,7 @@ MonoBehaviour:
   - {fileID: 5557009264471466117}
   - {fileID: 5557009264471466138}
   - {fileID: 5557009264471466137}
+  - {fileID: 5557009264471466139}
   _movingDuration: 6
   _moveSpeed: 2
   _idleDuration: 3
@@ -388,9 +421,6 @@ MonoBehaviour:
   - {fileID: 5557009264471466116}
   - {fileID: 5557009264471466138}
   - {fileID: 5557009264471466137}
-  _damage: 10
-  _hitForce: 3
-  _hitPoint: {fileID: 5557009264363426838}
 --- !u!114 &5557009264471466119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +488,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 5557009264471466112}
-  _transitionRange: 1
+  _transitionRangeX: 0.5
+  _transitionRangeY: 1
 --- !u!114 &5557009264471466138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,32 +529,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 5557009264471466113}
-  _time: 2
---- !u!114 &5557009264471466143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557009264471466141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7fe1d1d32348463e926b795e5fdc77b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transitionRange: 10
-  _rangeYPosition: 0.5
-  _filter:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
+  _time: 1

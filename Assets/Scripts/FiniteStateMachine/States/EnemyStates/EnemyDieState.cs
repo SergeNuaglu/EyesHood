@@ -9,8 +9,9 @@ public class EnemyDieState : State
 
     private float _runningTime;
 
-    private void Start()
+    private void OnEnable()
     {
+        Debug.Log("Die");
         Animator.Play(AnimationNames.HashDie);
     }
 

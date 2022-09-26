@@ -5,7 +5,6 @@ using UnityEngine;
 public class ClimbState : State
 {
     private Ladder _currentLadder;
-    private bool _canClimb;
 
     private void OnEnable()
     {
@@ -13,7 +12,6 @@ public class ClimbState : State
 
         if (_currentLadder != null)
         {
-            _canClimb = true;
             Target.Rigidbody.isKinematic = true;
             Target.Rigidbody.velocity = Vector2.zero;
             Animator.SetFloat(AnimationNames.HashWalkSpeed, Vector2.zero.x);
@@ -25,7 +23,6 @@ public class ClimbState : State
 
             Animator.Play(AnimationNames.HashClimb);
         }
-
     }
 
     private void OnDisable()
@@ -35,20 +32,22 @@ public class ClimbState : State
 
     private void Update()
     {
+        _currentLadder = Target.ClimbController.CurrentLadder;
+
         if (_currentLadder != null)
         {
             if (_currentLadder.TopZone.IsPlayerInside)
             {
                 if (Target.MoveInput.y > 0)
                 {
-                    StopClimb(true);
+                    ExitLadder(true);
                 }
             }
             else if (_currentLadder.BottomZone.IsPlayerInside)
             {
                 if (Target.MoveInput.y < 0)
                 {
-                    StopClimb(false);
+                    ExitLadder(false);
                 }
             }
         }
@@ -56,23 +55,13 @@ public class ClimbState : State
 
     private void FixedUpdate()
     {
-        if (_canClimb)
-        {
-            Target.Rigidbody.velocity = new Vector2(Target.Rigidbody.velocity.x, Target.MoveInput.y * Target.PlayerData.ClimbSpeed);
-            Animator.SetFloat(AnimationNames.HashClimbSpeed, Target.MoveInput.y);
-        }
-        else
-        {
-            Animator.SetFloat(AnimationNames.HashClimbSpeed, Vector2.zero.y);
-            Target.Rigidbody.velocity = Vector2.zero;
-            Animator.Play(AnimationNames.HashIdle);
-        }
+        Target.Rigidbody.velocity = new Vector2(Target.Rigidbody.velocity.x, Target.MoveInput.y * Target.PlayerData.ClimbSpeed);
+        Animator.SetFloat(AnimationNames.HashClimbSpeed, Target.MoveInput.y);
     }
 
-    private void StopClimb(bool isTopZone)
+    private void ExitLadder(bool isTopZone)
     {
-        _canClimb = false;
-        _currentLadder.ExitLadder(Target.transform, isTopZone);
         Target.Rigidbody.isKinematic = false;
+        _currentLadder.Exit(Target.transform, isTopZone);
     }
 }

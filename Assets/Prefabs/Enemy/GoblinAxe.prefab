@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4776545851508510848}
   - component: {fileID: 4776545851508510849}
   - component: {fileID: 4776545851508510850}
+  - component: {fileID: 4776545851508510864}
   - component: {fileID: 4776545851508510851}
   - component: {fileID: 4776545851508510860}
   - component: {fileID: 4776545851508510861}
@@ -27,7 +28,6 @@ GameObject:
   - component: {fileID: 4776545851508510869}
   - component: {fileID: 4776545851508510870}
   - component: {fileID: 4776545851508510871}
-  - component: {fileID: 4776545851508510864}
   m_Layer: 0
   m_Name: GoblinAxe
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 0e3950437c1ce074fb6472a3ee893ff8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -183,12 +183,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6de322af23a46708cfa2f3b109b349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
-  _reward: 0
+  _maxHealth: 6
+  _reward: 4
   _target: {fileID: 0}
   _foot: {fileID: 4776545851738289652}
   _hitPoint: {fileID: 4776545851651154969}
   _damage: 5
+  _isBoss: 0
+--- !u!114 &4776545851508510864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4776545851508510866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fe1d1d32348463e926b795e5fdc77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitionRange: 5
+  _rangeYPosition: 0.5
+  _filter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!114 &4776545851508510851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,34 +407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetState: {fileID: 4776545851508510862}
   _time: 2
---- !u!114 &4776545851508510864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4776545851508510866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7fe1d1d32348463e926b795e5fdc77b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transitionRange: 10
-  _rangeYPosition: 1
-  _filter:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
 --- !u!1 &4776545851651154980
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4776545851738289655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.304, y: -0.75, z: 0}
+  m_LocalPosition: {x: 0.76, y: -0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

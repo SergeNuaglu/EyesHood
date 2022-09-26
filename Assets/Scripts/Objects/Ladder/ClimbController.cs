@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ClimbController : MonoBehaviour
 {
@@ -8,14 +9,17 @@ public class ClimbController : MonoBehaviour
 
     public Ladder CurrentLadder { get; private set; }
 
+    public event UnityAction LadderUsed;
+
     private void OnEnable()
     {
         if (_ladders.Count > 0)
         {
             foreach (var ladder in _ladders)
             {
-                ladder.PlayerWentIn += OnPlayerWentIn;
-                ladder.PlayerWentOut += OnPlayerWentOut;
+                ladder.PlayerWentToLadder += OnPlayerWentToLadder;
+                ladder.PlayerGotOffLadder += OnPlayerGotOffLadder;
+                ladder.PlayerMovedAway += OnPlayerMovedAway;
             }
         }
     }
@@ -28,19 +32,25 @@ public class ClimbController : MonoBehaviour
             {
                 foreach (var ladder in _ladders)
                 {
-                    ladder.PlayerWentIn -= OnPlayerWentIn;
-                    ladder.PlayerWentOut -= OnPlayerWentOut;
+                    ladder.PlayerWentToLadder -= OnPlayerWentToLadder;
+                    ladder.PlayerGotOffLadder -= OnPlayerGotOffLadder;
+                    ladder.PlayerMovedAway -= OnPlayerMovedAway;
                 }
             }
         }
     }
 
-    private void OnPlayerWentIn(Ladder ladder)
+    private void OnPlayerWentToLadder(Ladder ladder)
     {
         CurrentLadder = ladder;
     }
 
-    private void OnPlayerWentOut()
+    private void OnPlayerGotOffLadder()
+    {
+        LadderUsed?.Invoke();
+    }
+
+    private void OnPlayerMovedAway()
     {
         CurrentLadder = null;
     }

@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
 
     public Player Target => _target;
     public Foot Foot => _foot;
+    public bool IsKilled { get; private set; }
 
     public event UnityAction Died;
     public event UnityAction DamageApplied;
@@ -35,12 +36,14 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        _hitPoint.Hit += OnHit;
+        if (_hitPoint != null)
+            _hitPoint.Hit += OnHit;
     }
 
     private void OnDisable()
     {
-        _hitPoint.Hit -= OnHit;
+        if (_hitPoint != null)
+            _hitPoint.Hit -= OnHit;
     }
 
     public void OnHit()
@@ -63,10 +66,17 @@ public class Enemy : MonoBehaviour
             DamageApplied?.Invoke();
     }
 
-    protected virtual void Die()
+    private void Die()
     {
+        Debug.Log("Transit");
+        Died += Test;
         Died?.Invoke();
-
         _target.OnEnemyDied(_reward, _isBoss);
+        IsKilled = true;
+    }
+
+    private void Test()
+    {
+        print("Invoke");
     }
 }

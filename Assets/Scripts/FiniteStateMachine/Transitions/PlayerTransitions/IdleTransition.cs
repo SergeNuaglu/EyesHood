@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class IdleTransition : Transition
 {
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Target.ClimbController.LadderUsed += OnLadderUsed;
+    }
+
+    private void OnDisable()
+    {
+        Target.ClimbController.LadderUsed -= OnLadderUsed;
+    }
+
     private void Update()
     {
         if (Target.Foot.IsGrounded)
@@ -13,5 +24,16 @@ public class IdleTransition : Transition
                 NeedTransit = true;
             }
         }
+    }
+
+    private void OnLadderUsed()
+    {
+        Target.ClimbController.CurrentLadder.PlayerGotOffLadder += OnPlayerGotOffLadder;
+    }
+
+    private void OnPlayerGotOffLadder()
+    {
+        Target.ClimbController.CurrentLadder.PlayerGotOffLadder -= OnPlayerGotOffLadder;
+        NeedTransit = true;
     }
 }

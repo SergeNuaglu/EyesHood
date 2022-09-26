@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2798850031049993873}
   - component: {fileID: 2798850031049993878}
   - component: {fileID: 2798850031049993879}
+  - component: {fileID: 2798850031049993862}
   - component: {fileID: 2798850031049993876}
   - component: {fileID: 2798850031049993877}
   - component: {fileID: 2798850031049993866}
@@ -27,7 +28,6 @@ GameObject:
   - component: {fileID: 2798850031049993859}
   - component: {fileID: 2798850031049993856}
   - component: {fileID: 2798850031049993857}
-  - component: {fileID: 2798850031049993862}
   m_Layer: 0
   m_Name: BigBoar
   m_TagString: Untagged
@@ -183,10 +183,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6de322af23a46708cfa2f3b109b349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
-  _reward: 0
+  _maxHealth: 10
+  _reward: 3
   _target: {fileID: 0}
   _foot: {fileID: 2798850031054621282}
+  _hitPoint: {fileID: 2798850032158555064}
+  _damage: 5
+  _isBoss: 0
+--- !u!114 &2798850031049993862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2798850031049993861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fe1d1d32348463e926b795e5fdc77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitionRange: 10
+  _rangeYPosition: 0.5
+  _filter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!114 &2798850031049993876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,9 +298,6 @@ MonoBehaviour:
   - {fileID: 2798850031049993869}
   - {fileID: 2798850031049993859}
   - {fileID: 2798850031049993856}
-  _damage: 10
-  _hitForce: 3
-  _hitPoint: {fileID: 2798850032158555064}
 --- !u!114 &2798850031049993865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,7 +365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 2798850031049993864}
-  _transitionRange: 1.4
+  _transitionRangeX: 1.5
+  _transitionRangeY: 0.5
 --- !u!114 &2798850031049993859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,34 +407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetState: {fileID: 2798850031049993867}
   _time: 2
---- !u!114 &2798850031049993862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2798850031049993861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7fe1d1d32348463e926b795e5fdc77b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transitionRange: 10
-  _rangeYPosition: 1
-  _filter:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
 --- !u!1 &2798850031054621283
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153f66e4472954e3abc2dd1e2755d2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitForce: 0
 --- !u!58 &2798850032158555065
 CircleCollider2D:
   m_ObjectHideFlags: 0

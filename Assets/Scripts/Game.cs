@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Game : MonoBehaviour
 {
     [SerializeField] private Player _player;
+
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private RestartScreen _restartScreen;
     [SerializeField] private WinScreen _winScreen;

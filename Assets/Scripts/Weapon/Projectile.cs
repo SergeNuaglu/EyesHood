@@ -49,14 +49,16 @@ public class Projectile : MonoBehaviour
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
             HitTarget();
-            enemy.ApllyDamage(_damage);
+
+            if (enemy.IsKilled == false)
+                enemy.ApllyDamage(_damage);
         }
         else if (collision.TryGetComponent<InteractionObject>(out InteractionObject interactionObject))
         {
             HitTarget();
             interactionObject.ApllyDamage(_damage);
         }
-        else if(collision.TryGetComponent<Player>(out Player player))
+        else if (collision.TryGetComponent<Player>(out Player player))
         {
             player.ApplyDamage(_damage, _flyDirection);
             HitTarget();

@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _label: Spear
-  _price: 3
+  _price: 10
   _icon: {fileID: 21300000, guid: a0a8ca4c06aa54f4fafdf9170a530589, type: 3}

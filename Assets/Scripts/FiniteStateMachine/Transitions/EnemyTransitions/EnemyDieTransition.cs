@@ -17,15 +17,18 @@ public class EnemyDieTransition : Transition
     {
         base.OnEnable();
         _enemy.Died += OnDied;
+        Debug.Log("On" + gameObject.name);
     }
 
     private void OnDisable()
     {
+        Debug.Log("Off" + gameObject.name);
         _enemy.Died -= OnDied;
     }
 
     private void OnDied()
     {
+        Debug.Log("Enemy Died");
         NeedTransit = true;
     }
 }
