@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Transition : MonoBehaviour
@@ -19,5 +17,10 @@ public class Transition : MonoBehaviour
     public void Init(Player target)
     {
         Target = target;
+    }
+
+    public void SwitchOffNeedTransit()
+    {
+        NeedTransit = false;
     }
 }

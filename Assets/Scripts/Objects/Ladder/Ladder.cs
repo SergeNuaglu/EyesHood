@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,7 +20,7 @@ public class Ladder : MonoBehaviour
     private void OnEnable()
     {
         _topZone.PlayerEnteredZone += OnPlayerEnteredZone;
-        _bottomZone.PlayerEnteredZone +=OnPlayerEnteredZone;
+        _bottomZone.PlayerEnteredZone += OnPlayerEnteredZone;
         _topZone.PlayerWentOutZone += OnPlayerWentOutZone;
         _bottomZone.PlayerWentOutZone += OnPlayerWentOutZone;
     }
@@ -56,7 +54,7 @@ public class Ladder : MonoBehaviour
     }
 
 
-   private void OnPlayerWentOutZone()
+    private void OnPlayerWentOutZone()
     {
         PlayerMovedAway?.Invoke();
     }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,21 +8,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     [SerializeField] private float _deadZone;
     [SerializeField] private RectTransform _background;
     [SerializeField] private RectTransform _handle;
+    [SerializeField] private Canvas _canvas;
 
-    private Canvas _canvas;
     private Vector2 _handlePositionDelta;
     private Vector2 _radius;
-    private Coroutine _stopMovemenJob;
+    private Coroutine _lowDeltaRoutine;
 
     public Vector2 HandlePositionDelta =>_handlePositionDelta;
 
     private void Start()
     {
-        _canvas = GetComponentInParent<Canvas>();
-
-        if (_canvas == null)
-            Debug.LogError("The Joystick is not placed inside a canvas");
-
         Vector2 center = new Vector2(0.5f, 0.5f);
         _background.pivot = center;
         _handle.anchorMin = center;
@@ -35,8 +29,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_stopMovemenJob != null)
-            StopCoroutine(_stopMovemenJob);
+        if (_lowDeltaRoutine != null)
+            StopCoroutine(_lowDeltaRoutine);
 
         _handlePositionDelta = GetDelta(eventData.position);
         MoveHandle();
@@ -50,7 +44,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _stopMovemenJob = StartCoroutine(LowerDelta());
+        _lowDeltaRoutine = StartCoroutine(LowDelta());
     }
 
     private Vector2 GetDelta(Vector2 pointerPosition)
@@ -73,7 +67,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         _handle.anchoredPosition = _handlePositionDelta * _radius * _handleMoveRange;
     }
 
-    private IEnumerator LowerDelta()
+    private IEnumerator LowDelta()
     {
         int frameCount = 1;
 

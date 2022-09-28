@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DashState : State
 {
     [SerializeField] private float _dashSpeed;
 
-    private Vector2 direction;
+    private Vector2 _direction;
 
     private void OnEnable()
     {
         if (transform.position.x >= Target.transform.position.x)
-            direction = Vector2.left;
+            _direction = Vector2.left;
         else
-            direction = Vector2.right;
+            _direction = Vector2.right;
 
         if (transform.position.x > Target.transform.position.x && transform.localScale.x > 0)
             ChangeDirection();
@@ -23,7 +21,7 @@ public class DashState : State
 
     private void Update()
     {
-        transform.Translate(direction * _dashSpeed * Time.deltaTime);
+        transform.Translate(_direction * _dashSpeed * Time.deltaTime);
         Animator.Play(AnimationNames.HashDash);
     }
 

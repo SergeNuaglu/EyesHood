@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class ProjectileProduct : Product
 {
     private Quiver _quiver;
@@ -11,6 +7,7 @@ public class ProjectileProduct : Product
         if (_quiver.ItemsCount < _quiver.CurentCapacity)
         {
             _quiver.AddItem();
+            _quiver.SaveLastItemCount();
             return true;
         }
 

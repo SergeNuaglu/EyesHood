@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 2798850031049993872}
   - component: {fileID: 2798850031049993873}
   - component: {fileID: 2798850031049993878}
+  - component: {fileID: 2798850031049993877}
   - component: {fileID: 2798850031049993879}
   - component: {fileID: 2798850031049993862}
   - component: {fileID: 2798850031049993876}
-  - component: {fileID: 2798850031049993877}
   - component: {fileID: 2798850031049993866}
   - component: {fileID: 2798850031049993867}
   - component: {fileID: 2798850031049993864}
@@ -171,6 +171,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2798850031049993877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2798850031049993861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d95eb86250a624069924b24b209a85c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2798850031049993879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,18 +243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firstState: {fileID: 2798850031049993866}
---- !u!114 &2798850031049993877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2798850031049993861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d95eb86250a624069924b24b209a85c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _allTransitions:
+  - {fileID: 2798850031049993868}
+  - {fileID: 2798850031049993869}
+  - {fileID: 2798850031049993858}
+  - {fileID: 2798850031049993859}
+  - {fileID: 2798850031049993856}
+  - {fileID: 2798850031049993857}
 --- !u!114 &2798850031049993866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,11 +262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b400b6472b4b4210880081d7a869f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Transitions:
+  _stateTransitions:
   - {fileID: 2798850031049993868}
+  - {fileID: 2798850031049993858}
   - {fileID: 2798850031049993859}
   - {fileID: 2798850031049993856}
-  - {fileID: 2798850031049993858}
   _movingDuration: 6
   _moveSpeed: 2
   _idleDuration: 3
@@ -275,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d179edd4180248589ea1ebdd32bb050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Transitions:
+  _stateTransitions:
   - {fileID: 2798850031049993869}
   - {fileID: 2798850031049993858}
   - {fileID: 2798850031049993859}
@@ -293,9 +300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc847f7004104de1b1d2239308ea812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Transitions:
-  - {fileID: 2798850031049993857}
+  _stateTransitions:
   - {fileID: 2798850031049993869}
+  - {fileID: 2798850031049993857}
   - {fileID: 2798850031049993859}
   - {fileID: 2798850031049993856}
 --- !u!114 &2798850031049993865
@@ -310,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff6665bef23b4ed0be637ddcd778ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Transitions:
+  _stateTransitions:
   - {fileID: 2798850031049993857}
 --- !u!114 &2798850031049993870
 MonoBehaviour:
@@ -324,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4ae25424292494c87be89ee819e1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Transitions: []
+  _stateTransitions: []
   _dieDuration: 20
 --- !u!114 &2798850031049993868
 MonoBehaviour:

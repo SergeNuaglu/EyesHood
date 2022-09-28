@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyDieState : State
 {
@@ -11,7 +8,6 @@ public class EnemyDieState : State
 
     private void OnEnable()
     {
-        Debug.Log("Die");
         Animator.Play(AnimationNames.HashDie);
     }
 

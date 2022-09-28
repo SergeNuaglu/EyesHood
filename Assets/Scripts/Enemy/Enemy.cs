@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +24,6 @@ public class Enemy : MonoBehaviour
     public event UnityAction DamageApplied;
     public event UnityAction<int, int> HealthChanged;
 
-
     private void Awake()
     {
         _enemyStateMachine = GetComponent<FiniteStateMachine>();
@@ -34,7 +31,7 @@ public class Enemy : MonoBehaviour
         _currentHealth = _maxHealth;
     }
 
-    protected virtual void OnEnable()
+    private void OnEnable()
     {
         if (_hitPoint != null)
             _hitPoint.Hit += OnHit;
@@ -46,10 +43,10 @@ public class Enemy : MonoBehaviour
             _hitPoint.Hit -= OnHit;
     }
 
-    public void OnHit()
+    private void Update()
     {
-        Vector2 _hitDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        Target.ApplyDamage(_damage, _hitDirection, _hitPoint.HitForce);
+        if (IsKilled)
+            Died?.Invoke();
     }
 
 
@@ -66,17 +63,15 @@ public class Enemy : MonoBehaviour
             DamageApplied?.Invoke();
     }
 
-    private void Die()
+    private void OnHit()
     {
-        Debug.Log("Transit");
-        Died += Test;
-        Died?.Invoke();
-        _target.OnEnemyDied(_reward, _isBoss);
-        IsKilled = true;
+        Vector2 _hitDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        Target.ApplyDamage(_damage, _hitDirection, _hitPoint.HitForce);
     }
 
-    private void Test()
+    private void Die()
     {
-        print("Invoke");
+        _target.OnEnemyDied(_reward, _isBoss);
+        IsKilled = true;
     }
 }

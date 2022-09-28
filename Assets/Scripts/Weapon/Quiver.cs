@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
 public class Quiver : MonoBehaviour
-{  
-    [SerializeField]private int _capacity;
+{
+    [SerializeField] private int _capacity;
     [SerializeField] private PickUpItemsGenerator _pickUpItemsGenerator;
     [SerializeField] private LastLevelData _lastItemsCount;
     [SerializeField] private TMP_Text _countDisplay;

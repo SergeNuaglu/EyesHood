@@ -8,22 +8,23 @@ public class Game : MonoBehaviour
     [SerializeField] private Player _player;
 
     [SerializeField] private StartScreen _startScreen;
-    [SerializeField] private RestartScreen _restartScreen;
-    [SerializeField] private WinScreen _winScreen;
-    [SerializeField] private GameOverScreen _gameOverScreen;
+    [SerializeField] private StartScreen _restartScreen;
+    [SerializeField] private FinalScreen _winScreen;
+    [SerializeField] private FinalScreen _gameOverScreen;
     [SerializeField] private Shop _shop;
     [SerializeField] private Quiver _arrowQuiver;
     [SerializeField] private Quiver _spearQuiver;
     [SerializeField] private LastLevelData _lastSceneBuildIndex;
     [SerializeField] private LastLevelData _isRestartIndex;
 
-    private WaitForSeconds _timeBeforGamerOver = new WaitForSeconds(3);
+    private Coroutine _stopGameRoutine;
+    private WaitForSeconds _timeBeforGamerStop = new WaitForSeconds(3);
 
     private void OnEnable()
     {
-        _startScreen.PlayButtonClicked += OnPlayButtonClicked;
+        _startScreen.StartButtonClicked += OnStartButtonClicked;
         _startScreen.ShopButtonClicked += OnShopButtonClicked;
-        _restartScreen.RestartButtonClicked += OnRestartButtonClicked;
+        _restartScreen.StartButtonClicked += OnRestartButtonClicked;
         _restartScreen.ShopButtonClicked += OnShopButtonClicked;
         _gameOverScreen.StartOverButtonClicked += OnStartOverButtonClicked;
         _gameOverScreen.ExitButtonClicked += OnExitButtonClicked;
@@ -38,9 +39,9 @@ public class Game : MonoBehaviour
 
     private void OnDisable()
     {
-        _startScreen.PlayButtonClicked -= OnPlayButtonClicked;
+        _startScreen.StartButtonClicked -= OnStartButtonClicked;
         _startScreen.ShopButtonClicked -= OnShopButtonClicked;
-        _restartScreen.RestartButtonClicked -= OnPlayButtonClicked;
+        _restartScreen.StartButtonClicked -= OnStartButtonClicked;
         _restartScreen.ShopButtonClicked -= OnShopButtonClicked;
         _gameOverScreen.StartOverButtonClicked -= OnStartOverButtonClicked;
         _gameOverScreen.ExitButtonClicked -= OnExitButtonClicked;
@@ -51,7 +52,7 @@ public class Game : MonoBehaviour
         _player.BossKilled -= OnBossKilled;
 
 
-        if (Convert.ToBoolean(_isRestartIndex) == false)
+        if (Convert.ToBoolean(_isRestartIndex.Data) == false)
         {
             _arrowQuiver.SaveLastItemCount();
             _spearQuiver.SaveLastItemCount();
@@ -66,10 +67,9 @@ public class Game : MonoBehaviour
         _gameOverScreen.Close();
         _shop.gameObject.SetActive(false);
 
-        if (Convert.ToBoolean(_isRestartIndex) == false)
+        if (Convert.ToBoolean(_isRestartIndex.Data) == false)
         {
             Time.timeScale = 0;
-            _startScreen.Open();
         }
         else
         {
@@ -77,13 +77,12 @@ public class Game : MonoBehaviour
             _isRestartIndex.Set(Convert.ToInt32(false));
         }
 
-        _player.ReturnLastLevelData();
         _arrowQuiver.ReturnLastItemCount();
         _spearQuiver.ReturnLastItemCount();
     }
 
 
-    private void OnPlayButtonClicked()
+    private void OnStartButtonClicked()
     {
         _startScreen.Close();
         StartGame();
@@ -109,9 +108,9 @@ public class Game : MonoBehaviour
     private void OnStartOverButtonClicked()
     {
         _gameOverScreen.Close();
-        _isRestartIndex.Set(Convert.ToInt32(true));
         _player.PlayerData.LastHeartCount.Set(_player.PlayerData.MaxHeartCount);
         _lastSceneBuildIndex.Reset();
+        _isRestartIndex.Reset();
         SceneManager.LoadScene(_lastSceneBuildIndex.Data);
         StartGameOver();
     }
@@ -123,19 +122,25 @@ public class Game : MonoBehaviour
 
     private void StartGameOver()
     {
-        _player.ResetPlayer();
+        _player.ResetLevelData();
         StartGame();
     }
 
     private void OnGameOver()
     {
         _player.PlayerData.LastHeartCount.Set(_player.PlayerData.LastHeartCount.Data - 1);
-        StartCoroutine(StopGame());
+
+        if (_player.PlayerData.LastHeartCount.Data > 0)
+            _stopGameRoutine = StartCoroutine(StopGame(_restartScreen));
+        else
+            _stopGameRoutine = StartCoroutine(StopGame(_gameOverScreen));
+
+        _player.ReturnLastLevelData();
     }
 
     private void OnBossKilled()
     {
-        _winScreen.Open();
+        _stopGameRoutine = StartCoroutine(StopGame(_winScreen));
     }
 
     private void OnExitButtonClicked()
@@ -143,17 +148,12 @@ public class Game : MonoBehaviour
         Application.Quit();
     }
 
-    private IEnumerator StopGame()
+    private IEnumerator StopGame(Screen openScreen)
     {
-        yield return _timeBeforGamerOver;
+        yield return _timeBeforGamerStop;
         Time.timeScale = 0;
-        _player.ReturnLastLevelData();
-
-        if (_player.PlayerData.LastHeartCount.Data > 0)
-            _restartScreen.Open();
-        else
-            _gameOverScreen.Open();
-
-        StopCoroutine(StopGame());
+        openScreen.Open();
+        StopCoroutine(_stopGameRoutine);
+        _stopGameRoutine = null;
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttackState : State
@@ -31,8 +29,6 @@ public class PlayerAttackState : State
         if (Target.CurrentWeapon.Index != _weaponsIndex.BowIndex)
             Target.CurrentWeapon.Swinger.ResetSwing();
     }
-
-    
 
     private void PrepareToSwordAttack()
     {

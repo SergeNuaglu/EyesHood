@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    [SerializeField] private List<Transition> Transitions;
+    [SerializeField] private List<Transition> _stateTransitions;
 
     protected Animator Animator;
     protected HasherAnimationsNames AnimationNames;
@@ -26,29 +25,17 @@ public class State : MonoBehaviour
         {
             Target = target;
             enabled = true;
-
-            foreach (var transition in Transitions)
-            {
-                transition.Init(Target);
-                transition.enabled = true;
-            }
         }
     }
 
     public void Exit()
     {
-        if (enabled)
-        {
-            foreach (var transition in Transitions)
-                transition.enabled = false;
-        }
-
         enabled = false;
     }
 
     public State GetNextState()
     {
-        foreach (var transition in Transitions)
+        foreach (var transition in _stateTransitions)
         {
             if (transition.NeedTransit)
                 return transition.TargetState;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealthBar : Bar
@@ -14,6 +12,5 @@ public class PlayerHealthBar : Bar
     private void OnDisable()
     {
         _player.HealthChanged -= OnValueChanged;
-
     }
 }

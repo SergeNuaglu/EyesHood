@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -18,17 +16,18 @@ public class WalkState : State
     private float _maxSpeedIndex = 1;
     private bool _isMoving = true;
 
+    private void OnDisable()
+    {
+        _isMoving = true;
+        _runningTime = _startRunningTime;
+    }
+
     private void Start()
     {
         if (GetComponent<Enemy>().Foot != null)
             _foot = GetComponent<Enemy>().Foot;
     }
 
-    private void OnDisable()
-    {
-        _isMoving = true;
-        _runningTime = _startRunningTime;
-    }
 
     private void Update()
     {

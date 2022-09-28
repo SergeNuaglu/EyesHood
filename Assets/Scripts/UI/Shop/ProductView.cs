@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -39,6 +37,5 @@ public class ProductView : MonoBehaviour
     private void OnSellButtonClick()
     {
         SellButtonClicked?.Invoke(_product, this);
-        //_product.Sell();
     }
 }

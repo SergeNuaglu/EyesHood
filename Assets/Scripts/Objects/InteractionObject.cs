@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -13,6 +12,7 @@ public class InteractionObject : MonoBehaviour
 
     private Animator _animator;
     private HasherAnimationsNames _animatorNames;
+    private Coroutine _showCoinRoutine;
     private WaitForSeconds _timeBeforShowCoin = new WaitForSeconds(0.5f);
 
     private void Start()
@@ -36,7 +36,7 @@ public class InteractionObject : MonoBehaviour
     private void Destruct()
     {
         _animator.Play(_animatorNames.HashDie);
-        StartCoroutine(ShowCoin());
+        _showCoinRoutine = StartCoroutine(ShowCoin());
         DisableObjectAbroadScreen();
     }
 
@@ -47,15 +47,14 @@ public class InteractionObject : MonoBehaviour
         Vector3 disableRightPoint = camera.ViewportToWorldPoint(new Vector3(1, 0.5f, camera.nearClipPlane));
 
         if (transform.position.x < disableLeftPoint.x || transform.position.x > disableRightPoint.x)
-        {
             Destroy(gameObject);
-        }
     }
 
     private IEnumerator ShowCoin()
     {
         yield return _timeBeforShowCoin;
         _pickUpItemGenerator.SetItemToPoint(_coinPoint.transform.position);
-        StopCoroutine(ShowCoin());
+        StopCoroutine(_showCoinRoutine);
+        _showCoinRoutine = null;
     }
 }

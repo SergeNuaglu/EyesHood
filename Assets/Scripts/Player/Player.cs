@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -55,8 +54,7 @@ public class Player : MonoBehaviour
             heart.Init(this);
         }
 
-        var currentHeart = _hearts.FirstOrDefault(h => h.IsEmpty == false);
-        currentHeart.MakeCurrent();
+        ReturnLastLevelData();
     }
 
     private void OnEnable()
@@ -111,31 +109,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCoinPickedUp()
-    {
-        _money++;
-        MoneyChanged?.Invoke(_money);
-    }
-
     public void Pay(int price)
     {
         _money -= price;
         MoneyChanged?.Invoke(_money);
+        _playerData.LastMoney.Set(_money);
     }
 
     public void Die()
     {
-        GameOver?.Invoke();
-        _playerData.LastHealth.Set(_playerData.MaxHealth);
-        _playerData.LastWeaponIndex.Reset();
-        _isDied = true;
-    }
-
-    private void OnHealthPotionPickedUp()
-    {
-        int healthCount = 25;
-
-        AddHealth(healthCount);
+        if (_isDied == false)
+        {
+            GameOver?.Invoke();
+            _playerData.LastHealth.Set(_playerData.MaxHealth);
+            _isDied = true;
+        }
     }
 
     public void AddHealth(int healthCount)
@@ -166,13 +154,18 @@ public class Player : MonoBehaviour
                 _hearts[i].SetIsEmptyFlag(true);
         }
 
+        Heart currentHeart = _hearts.FirstOrDefault(h => h.IsEmpty == false);
+
+        if (currentHeart != null)
+            currentHeart.MakeCurrent();
+
         _currentHealth = _playerData.LastHealth.Data;
         HealthChanged?.Invoke(_currentHealth, _playerData.MaxHealth);
         _money = _playerData.LastMoney.Data;
         MoneyChanged?.Invoke(_money);
     }
 
-    public void ResetPlayer()
+    public void ResetLevelData()
     {
         _playerData.LastHealth.Set(_playerData.MaxHealth);
         _playerData.LastMoney.Reset();
@@ -187,6 +180,19 @@ public class Player : MonoBehaviour
             _money += reward;
 
         MoneyChanged?.Invoke(_money);
+    }
+
+    private void OnCoinPickedUp()
+    {
+        _money++;
+        MoneyChanged?.Invoke(_money);
+    }
+
+    private void OnHealthPotionPickedUp()
+    {
+        int healthCount = 25;
+
+        AddHealth(healthCount);
     }
 
     private void SaveLevelData()

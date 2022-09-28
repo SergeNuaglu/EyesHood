@@ -47,4 +47,4 @@ MonoBehaviour:
   _label: Potion
   _price: 15
   _icon: {fileID: 21300000, guid: a184d22a03582344e8351a7ccec11afc, type: 3}
-  _healthCount: 0
+  _healthCount: 25

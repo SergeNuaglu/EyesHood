@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FiniteStateMachine : MonoBehaviour
 {
-    [SerializeField] State _firstState;
+    [SerializeField] private State _firstState;
+    [SerializeField] private List<Transition> _allTransitions;
 
     private State _currentState;
     private State _nextState;
@@ -13,6 +13,12 @@ public class FiniteStateMachine : MonoBehaviour
     private void Start()
     {
         Reset(_firstState);
+
+        foreach (var transition in _allTransitions)
+        {
+            transition.Init(_target);
+            transition.enabled = true;
+        }
     }
 
     private void Update()
@@ -48,5 +54,10 @@ public class FiniteStateMachine : MonoBehaviour
 
         if (_currentState != null)
             _currentState.Enter(_target);
+
+        foreach (var transition in _allTransitions)
+        {
+            transition.SwitchOffNeedTransit();
+        }
     }
 }

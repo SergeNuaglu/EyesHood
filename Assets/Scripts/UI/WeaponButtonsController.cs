@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class WeaponButtonsController : MonoBehaviour
 {
@@ -31,16 +27,13 @@ public class WeaponButtonsController : MonoBehaviour
         _attackButton.gameObject.SetActive(false);
     }
 
-    public void OnWeaponButtonClicked(Weapon weapon, Sprite attackTypeIcon)
+    private void OnWeaponButtonClicked(Weapon weapon, Sprite attackTypeIcon)
     {
         _player.ChangeWeapon(weapon);
-
         UnselectActiveButton();
 
         if (_attackButton.gameObject.activeSelf == false)
-        {
             _attackButton.gameObject.SetActive(true);
-        }
 
         _attackButton.SetAttackTypeIcon(attackTypeIcon);
     }
